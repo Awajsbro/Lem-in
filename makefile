@@ -6,7 +6,7 @@
 #    By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/22 12:25:25 by awajsbro          #+#    #+#              #
-#    Updated: 2018/06/01 19:12:13 by awajsbro         ###   ########.fr        #
+#    Updated: 2018/07/13 11:36:39 by awajsbro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRC			=	check_anthill.c \
 				room.c \
 				pipe.c \
 				path_finding.c \
+				solve.c \
 				delete_anthill.c \
 
 OBJ			=	$(SRC:.c=.o) $(MAIN:.c=.o)

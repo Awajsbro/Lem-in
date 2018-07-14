@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 18:01:22 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/05/30 18:20:00 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/07/14 17:52:10 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,42 +18,35 @@ static void	delete_line(char **s)
 		(*s)--;
 	while (**s != '\n')
 		(*s)--;
-	**s = 0;
+	(*s)++;
+	while (**s != 0)
+	{
+		**s = 0;
+		(*s)++;
+	}
 }
 
-void		is_comment(char **s)
+char		cmd_cmt(char **s, t_li *li)
 {
-	while (**s != 0 && **s == '#' && (*s)[1] != '#')
-		while ((*s)[-1] != '\n' && **s != 0)
-			(*s)++;
-}
+	char	m;
 
-char		is_order(char **s, t_li *li)
-{
-	char	**tmp;
-
-	tmp = NULL;
-	if (ft_strnequ(*s, "##end\n", 6) == 1)
+	m = 0;
+	while (**s == '#')
 	{
-		*s += 6;
-		if (li->beg != NULL)
+		if (ft_strnequ(*s, "##end\n", 6) == 1)
+			m = m == -1 || m == 0 ? -1 : -42;
+		else if (ft_strnequ(*s, "##start\n", 8) == 1)
+			m = m == 1 || m == 0 ? 1 : -42;
+		*s += ft_strclen(*s, '\n');
+		if (**s == '\n')
+			*s += 1;
+		if ((m == -1 && li->end) || (m == 1 && li->beg) || m == -42)
 			return (0);
-		tmp = &li->beg;
 	}
-	else if (ft_strnequ(*s, "##start\n", 8) == 1)
-	{
-		*s +=8;
-		if (li->end != NULL)
-			return (0);
-		tmp = &li->end;
-	}
-	if (tmp != NULL)
-	{
-		is_comment(s);
-		if (is_order(s, li) == 0)
-			return (0);
-		*tmp = *s;
-	}
+	if (m == 1)
+		li->beg = *s;
+	else if (m == -1)
+		li->end = *s;
 	return (1);
 }
 
@@ -62,9 +55,7 @@ char		init_anthill(char *s, t_li *li)
 	char	tmp[21];
 	char	*tmp2;
 
-	li->nroom = 0;
-	li->npipe = 0;
-	is_comment(&s);
+	cmd_cmt(&s, li);
 	li->lem = ft_atoi(s);
 	if (ft_istrcmp("2147483648", ft_strncpy(tmp, s, ft_strclen(s, '\n'))) == -1
 		|| li->lem < 1)
@@ -75,11 +66,11 @@ char		init_anthill(char *s, t_li *li)
 	if (check_room(&s, li) == 0 || li->end == NULL || li->beg == NULL)
 		return (0);
 	if (*s == '-')
-		while (s[-1] != '\n')
+		while (s[-1] != '\n' && *s != 0)
 			s--;
-	if (!(save_room(tmp2, s, li)) || (li->end != NULL || li->beg != NULL))
+	if (!(save_room(tmp2, s--, li)))
 		return (0);
-	tmp2 = s;
+	tmp2 = s + 1;
 	if (check_pipe(&s, li) == 0)
 		delete_line(&s);
 	if (!(save_pipe(tmp2, li)))
