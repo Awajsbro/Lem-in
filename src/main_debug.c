@@ -6,12 +6,11 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 18:00:22 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/07/14 16:12:01 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/07/16 16:36:50 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lem_in.h"
-
 static void	init_li(t_li *li)
 {
 	li->str = NULL;
@@ -26,29 +25,30 @@ static void	init_li(t_li *li)
 	li->npipe = 0;
 }
 
-int			main(void)
+static void	init_move(t_li *li)
 {
-	char	buff[128];
-	char	*str;
-	int		r;
+	int		sim;
+	int		i;
+
+	i = -1;
+	if (!(li->way = (int**)malloc(sizeof(*(li->way)) * li->lem)))
+	{
+		delete_anthill(li->str, li);
+		ft_putendl("ERROR with MALLOC");
+		return ;
+	}
+	while (++i < li->lem)
+		li->way[i] = NULL;
+	sim = ft_lstlen(li->lsp);
+	sim = ROOM[0]->z > sim ? sim : ROOM[0]->z;
+	choose_path(sim, li);
+}
+
+static char	main_after_read(char *str)
+{
 	t_li	li;
-	int fd;
 
 	init_li(&li);
-	str = ft_strnew(0);
-	fd = open("/Users/awajsbro/project/test_lem/lem-in_maps/valid_maps_part_1_trace/100_map_trace", O_RDONLY);
-	while ((r = read(fd, buff, 127)) > 0)
-	{
-		buff[r] = 0;
-		if (!(str = ft_joinnfree(str, buff, 1)))
-			ft_putendl("ERROR with MALLOC");
-	}
-	if (r == -1)
-	{
-		ft_strdel(&str);
-		ft_putendl("ERROR with READ");
-		return (0);
-	}
 	li.str = str;
 	if (!(init_anthill(str, &li)) || (!path_finding(&li)))
 	{
@@ -57,7 +57,34 @@ int			main(void)
 		return (0);
 	}
 	ft_putendl(str);
-	choose_path(&li);
+	init_move(&li);
 	delete_anthill(str, &li);
 	return (0);
+}
+
+int			main(void)
+{
+	char	buff[128];
+	char	*str;
+	int		r;
+	int		fd;
+
+	str = ft_strnew(0);
+	fd = open("/Users/awajsbro/project/lem_in/anthill/sujet0.txt", O_RDONLY);
+	while ((r = read(fd, buff, 127)) > 0)
+	{
+		buff[r] = 0;
+		if (!(str = ft_joinnfree(str, buff, 1)))
+		{
+			ft_putendl("ERROR with MALLOC");
+			return (0);
+		}
+	}
+	if (r == -1)
+	{
+		ft_strdel(&str);
+		ft_putendl("ERROR with READ");
+		return (0);
+	}
+	return (main_after_read(str));
 }

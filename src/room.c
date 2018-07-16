@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 15:19:26 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/07/14 17:47:37 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/07/16 13:55:12 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,7 @@ char		check_room(char **s, t_li *li)
 				return (0);
 			(*s)++;
 		}
-		if (space != 2)
-			return (0);
-		if (++(li->nroom) > INT_MAX)
+		if (space != 2 || ++(li->nroom) > INT_MAX)
 			return (0);
 	}
 	return (1);
@@ -48,15 +46,9 @@ static void	set_end_begin(int j, t_li *li)
 	while (--j >= 0)
 	{
 		if (ft_strnequ(ROOM[j]->name, li->beg, ft_strlen(ROOM[j]->name)))
-		{
-			// li->beg = NULL;
 			ft_swap((void*)&ROOM[j], (void*)&ROOM[0]);
-		}
-		if (ft_strnequ(ROOM[j]->name, li->end, ft_strlen(ROOM[j]->name)))
-		{
-			// li->end = NULL;
+		else if (ft_strnequ(ROOM[j]->name, li->end, ft_strlen(ROOM[j]->name)))
 			ft_swap((void*)&ROOM[j], (void*)&ROOM[1]);
-		}
 	}
 }
 

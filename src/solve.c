@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/04 12:41:05 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/07/14 18:00:56 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/07/16 17:06:13 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,7 @@ static char		is_work(t_list **path, int *sim, int *i, t_li *li)
 {
 	if (is_cross(*sim, path, li) == 1)
 	{
-		while ((--(*i) >= 0 && path[*i]->next == path[*i + 1])
-			|| *i == *sim - 1)
+		while ((--(*i) == *sim - 1) || (*i >= 0 && path[*i]->next == path[*i + 1]))
 			;
 		if (*i == -1 && path[*sim - 1]->next == NULL)
 		{
@@ -86,13 +85,11 @@ static char		is_work(t_list **path, int *sim, int *i, t_li *li)
 	return (0);
 }
 
-static t_list	**select_path(int *sim, t_li *li)
+static t_list	**select_path(int *sim, t_li *li, int i)
 {
 	t_list	**path;
-	int		i;
 	int		tmp;
 
-	i = -1;
 	if (!(path = (t_list**)malloc(sizeof(*path) * *sim)))
 		return (NULL);
 	*path = NULL;
@@ -116,46 +113,28 @@ static t_list	**select_path(int *sim, t_li *li)
 	return (path);
 }
 
-void			choose_path(t_li *li)
+void			choose_path(int sim, t_li *li)
 {
-	int		sim;
-	int		lem;
 	int		i;
+	int		lem;
 	t_list	**path;
 
-	i = -1;
-	lem = li->lem;
-	if (!(li->way = (int**)malloc(sizeof(*(li->way)) * li->lem)))
+	lem = 0;
+	while (lem < li->lem)
 	{
-		delete_anthill(li->str, li);
-		ft_putendl("ERROR with MALLOC");
-		return ;
-	}
-	while (++i < li->lem)
-		li->way[i] = NULL;
-	i = 0;
-	while (lem > 0)
-	{
-		sim = ft_lstlen(li->lsp);
-		sim = lem < sim ? lem : sim;
-		sim = ROOM[0]->z > sim ? sim : ROOM[0]->z;
-		if (!(path = select_path(&sim, li)))
+		sim = li->lem - lem < sim ? li->lem - lem : sim;
+		if (!(path = select_path(&sim, li, -1)))
 		{
 			delete_anthill(li->str, li);
 			ft_putendl("ERROR with MALLOC");
 			return ;
 		}
-		lem = lem - sim;
-		sim = 0;
-		while (lem + i < li->lem)
-		{
-			li->way[i] = path[sim]->content;
-			i++;
-			sim++;
-		}
-		move_ant(li, i);
+		i = -1;
+		while (++i < sim)
+			li->way[lem++] = path[i]->content;
+		move_ant(li, lem);
 		free(path);
 	}
-	while (move_ant(li, i))
+	while (move_ant(li, lem))
 		;
 }

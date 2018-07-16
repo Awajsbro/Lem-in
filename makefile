@@ -6,7 +6,7 @@
 #    By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/22 12:25:25 by awajsbro          #+#    #+#              #
-#    Updated: 2018/07/13 11:36:39 by awajsbro         ###   ########.fr        #
+#    Updated: 2018/07/16 16:15:07 by awajsbro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ LIB_DIR 	=	./libft/
 
 LIBFT 		=	./libft/libft.a
 
-FLAG		=	-Wall -Werror -Wextra
+FLAG		=	-Wall -Werror -Wextra -g
 
 all :
 	@$(MAKE) -C $(LIB_DIR)

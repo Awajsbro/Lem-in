@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/22 12:22:56 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/07/13 16:03:37 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/07/16 16:01:17 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ char			cmd_cmt(char **s, t_li *li);
 char			save_room(char *s, char *end, t_li *li);
 char			check_room(char **s, t_li *li);
 char 			check_pipe(char **s, t_li *li);
-char			save_pipe(char *s, t_li *li);
+char			save_pipe(char *s, t_li *li, int i, char *tmp);
 char			path_finding(t_li *li);
-void			choose_path(t_li *li);
+void			choose_path(int sim, t_li *li);
 void			delete_anthill(char *s, t_li *li);
 
 #endif

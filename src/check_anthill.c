@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 18:01:22 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/07/14 17:52:10 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/07/16 13:50:59 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char		init_anthill(char *s, t_li *li)
 	tmp2 = s + 1;
 	if (check_pipe(&s, li) == 0)
 		delete_line(&s);
-	if (!(save_pipe(tmp2, li)))
+	if (!(save_pipe(tmp2, li, 0, tmp2)))
 		return (0);
 	return (1);
 }
