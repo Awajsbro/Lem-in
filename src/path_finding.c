@@ -6,31 +6,11 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 16:55:47 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/07/16 12:36:20 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/07/17 15:50:39 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lem_in.h"
-
-/*
-**static void		debug(t_list *lst, t_li *li)
-**{
-**	int i;
-**
-**	ft_putendl_fd("---------------------", 2);
-**	lst = ft_lststart(lst);
-**	while (lst != NULL)
-**	{
-**		i = -1;
-**		ft_printf("%[fd2]%d --> ", lst->size, lst->content);
-**		while (((int*)(lst->content))[++i] != 1 && i < lst->size)
-**			ft_printf("%[fd2]%s, ", li->room[((int*)(lst->content))[i]]->name);
-**		ft_printf("%[fd2]%s\n", li->room[((int*)(lst->content))[i]]->name);
-**		lst = lst->next;
-**	}
-**	ft_putendl_fd("---------------------", 2);
-**}
-*/
 
 static t_list	*order_path(t_list *lsp)
 {

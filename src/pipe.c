@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 15:27:35 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/07/16 13:51:15 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/07/26 15:54:51 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,17 @@ static int	room_number(char *name, char c, t_li *li)
 
 	i = 0;
 	len = ft_strclen(name, c);
-	while (!(ft_strnequ(name, ROOM[i]->name, len)))
+	while (!(ft_strnequ(name, ROOM[i]->name, len))
+		|| !(ft_strnequ(name, ROOM[i]->name, ft_strlen(ROOM[i]->name))))
 		i++;
 	return (i);
 }
 
 char		save_pipe(char *s, t_li *li, int i, char *tmp)
 {
+int debug;
+
+debug = 0;
 	while (*(tmp++) != 0)
 	{
 		cmd_cmt(&tmp, li);
@@ -38,6 +42,7 @@ char		save_pipe(char *s, t_li *li, int i, char *tmp)
 	cmd_cmt(&s, li);
 	while (*s != 0 && (li->npipe - i > 0))
 	{
+		debug++;
 		if (!(li->pip[i] = (int*)malloc(sizeof(*(li->pip)) * 2)))
 			return (0);
 		cmd_cmt(&s, li);

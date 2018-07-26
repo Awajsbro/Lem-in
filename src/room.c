@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 15:19:26 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/07/16 13:55:12 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/07/25 17:29:10 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,12 @@ static void	set_end_begin(int j, t_li *li)
 	{
 		if (ft_strnequ(ROOM[j]->name, li->beg, ft_strlen(ROOM[j]->name)))
 			ft_swap((void*)&ROOM[j], (void*)&ROOM[0]);
-		else if (ft_strnequ(ROOM[j]->name, li->end, ft_strlen(ROOM[j]->name)))
+		if (ft_strnequ(ROOM[j]->name, li->end, ft_strlen(ROOM[j]->name)))
+		{
 			ft_swap((void*)&ROOM[j], (void*)&ROOM[1]);
+			if (ft_strnequ(ROOM[j]->name, li->beg, ft_strlen(ROOM[j]->name)))
+				ft_swap((void*)&ROOM[j], (void*)&ROOM[0]);
+		}
 	}
 }
 

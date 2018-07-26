@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/22 12:18:47 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/07/16 16:02:06 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/07/25 15:14:36 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,23 @@ static void	init_li(t_li *li)
 	li->pip = NULL;
 	li->lsp = NULL;
 	li->way = NULL;
+	li->opt = 0;
 	li->lem = 0;
 	li->nroom = 0;
 	li->npipe = 0;
+}
+
+static char	option(int ac, char **av)
+{
+	char	opt;
+
+	opt = 0;
+	while (--ac > 0)
+		if (ft_strequ(av[ac], "-p"))
+			opt = (opt | AFFPATH);
+		else if (ft_strequ(av[ac], "-i"))
+			opt = (opt | INNOND);
+	return (opt);
 }
 
 static void	init_move(t_li *li)
@@ -45,11 +59,12 @@ static void	init_move(t_li *li)
 	choose_path(sim, li);
 }
 
-static char	main_after_read(char *str)
+static char	main_after_read(char *str, char opt)
 {
 	t_li	li;
 
 	init_li(&li);
+	li.opt = opt;
 	li.str = str;
 	if (!(init_anthill(str, &li)) || (!path_finding(&li)))
 	{
@@ -58,12 +73,16 @@ static char	main_after_read(char *str)
 		return (0);
 	}
 	ft_putendl(str);
+	if ((li.opt & AFFPATH) == AFFPATH)
+		debug(li.lsp, &li);
+	if ((li.opt & INNOND) == INNOND)
+		ft_printf("%{ble} Water%{reset_true} is comming !\n");
 	init_move(&li);
 	delete_anthill(str, &li);
 	return (0);
 }
 
-int			main(void)
+int			main(int ac, char **av)
 {
 	char	buff[128];
 	char	*str;
@@ -85,5 +104,5 @@ int			main(void)
 		ft_putendl("ERROR with READ");
 		return (0);
 	}
-	return (main_after_read(str));
+	return (main_after_read(str, option(ac, av)));
 }
