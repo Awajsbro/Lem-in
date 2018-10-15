@@ -6,35 +6,51 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 15:19:26 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/07/25 17:29:10 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/10/15 13:55:24 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lem_in.h"
 
+static char	real_check(char **s, char *space, char *minus)
+{
+	while (**s != '\n' && **s != 0)
+	{
+		if ((**s == ' ' || **s == 'L') && (*s)[-1] == '\n')
+			return (0);
+		else if (**s == ' ' && *minus < 2)
+		{
+			*minus = 0;
+			(*space)++;
+		}
+		else if (**s == '-')
+			if (*space == 0)
+				return (1);
+			else
+				(*minus)++;
+		else if ((*space > 0 && ft_isdigit(**s) == 0)
+			|| ft_isprint(**s) == 0 || *minus > 1)
+			return (0);
+		(*s)++;
+	}
+	return (2);
+}
+
 char		check_room(char **s, t_li *li)
 {
 	char	space;
+	char	minus;
+	char	r;
 
 	while (**s != 0)
 	{
 		(*s)++;
 		space = 0;
+		minus = 0;
 		if (cmd_cmt(s, li) == 0)
 			return (0);
-		while (**s != '\n' && **s != 0)
-		{
-			if ((**s == ' ' || **s == 'L') && (*s)[-1] == '\n')
-				return (0);
-			else if (**s == ' ')
-				space++;
-			else if (**s == '-')
-				return (1);
-			else if ((space > 0 && ft_isdigit(**s) == 0)
-				|| ft_isprint(**s) == 0)
-				return (0);
-			(*s)++;
-		}
+		if ((r = real_check(s, &space, &minus)) < 2)
+			return (r);
 		if (space != 2 || ++(li->nroom) > INT_MAX)
 			return (0);
 	}

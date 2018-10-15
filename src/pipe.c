@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 15:27:35 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/07/26 15:54:51 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/10/14 18:54:52 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,6 @@ static int	room_number(char *name, char c, t_li *li)
 
 char		save_pipe(char *s, t_li *li, int i, char *tmp)
 {
-int debug;
-
-debug = 0;
 	while (*(tmp++) != 0)
 	{
 		cmd_cmt(&tmp, li);
@@ -42,7 +39,6 @@ debug = 0;
 	cmd_cmt(&s, li);
 	while (*s != 0 && (li->npipe - i > 0))
 	{
-		debug++;
 		if (!(li->pip[i] = (int*)malloc(sizeof(*(li->pip)) * 2)))
 			return (0);
 		cmd_cmt(&s, li);

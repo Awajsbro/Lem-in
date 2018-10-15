@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/22 12:18:47 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/07/25 15:14:36 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/10/14 18:25:29 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static void	init_li(t_li *li)
 	li->way = NULL;
 	li->opt = 0;
 	li->lem = 0;
+	li->dlem =
 	li->nroom = 0;
 	li->npipe = 0;
 }
@@ -57,6 +58,7 @@ static void	init_move(t_li *li)
 	sim = ft_lstlen(li->lsp);
 	sim = ROOM[0]->z > sim ? sim : ROOM[0]->z;
 	choose_path(sim, li);
+	drown_room(li, 1);
 }
 
 static char	main_after_read(char *str, char opt)

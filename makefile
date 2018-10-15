@@ -6,7 +6,7 @@
 #    By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/22 12:25:25 by awajsbro          #+#    #+#              #
-#    Updated: 2018/07/17 15:48:55 by awajsbro         ###   ########.fr        #
+#    Updated: 2018/10/14 19:04:51 by awajsbro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRC			=	check_anthill.c \
 				pipe.c \
 				path_finding.c \
 				solve.c \
+				solve2.c \
 				delete_anthill.c \
 				bonus.c \
 
