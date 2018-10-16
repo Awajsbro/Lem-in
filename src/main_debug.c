@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/28 18:00:22 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/07/26 15:34:36 by awajsbro         ###   ########.fr       */
+/*   Created: 2018/05/22 12:18:47 by awajsbro          #+#    #+#             */
+/*   Updated: 2018/10/16 13:34:51 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static void	init_li(t_li *li)
 	li->way = NULL;
 	li->opt = 0;
 	li->lem = 0;
+	li->dlem =
 	li->nroom = 0;
 	li->npipe = 0;
 }
@@ -57,6 +58,7 @@ static void	init_move(t_li *li)
 	sim = ft_lstlen(li->lsp);
 	sim = ROOM[0]->z > sim ? sim : ROOM[0]->z;
 	choose_path(sim, li);
+	drown_room(li, 1);
 }
 
 static char	main_after_read(char *str, char opt)
@@ -76,7 +78,7 @@ static char	main_after_read(char *str, char opt)
 	if ((li.opt & AFFPATH) == AFFPATH)
 		debug(li.lsp, &li);
 	if ((li.opt & INNOND) == INNOND)
-		ft_printf("%{ble}	Water%{reset_true} is comming\n");
+		ft_printf("%{ble} Water%{reset_true} is comming !\n");
 	init_move(&li);
 	delete_anthill(str, &li);
 	return (0);
@@ -90,7 +92,7 @@ int			main(int ac, char **av)
 	int		fd;
 
 	str = ft_strnew(0);
-	fd = open("/Users/awajsbro/project/PublicTester/test_lem-in/maps/42.map", O_RDONLY);
+	fd = open("/Users/awajsbro/project/lem_in/TEST_LEM_IN/SAVE/_maps/example", O_RDONLY);
 	while ((r = read(fd, buff, 127)) > 0)
 	{
 		buff[r] = 0;

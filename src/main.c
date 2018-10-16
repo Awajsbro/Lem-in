@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/22 12:18:47 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/10/14 18:25:29 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/10/16 15:49:45 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	init_li(t_li *li)
 	li->way = NULL;
 	li->opt = 0;
 	li->lem = 0;
-	li->dlem =
+	li->dlem = 0;
 	li->nroom = 0;
 	li->npipe = 0;
 }
@@ -68,7 +68,7 @@ static char	main_after_read(char *str, char opt)
 	init_li(&li);
 	li.opt = opt;
 	li.str = str;
-	if (!(init_anthill(str, &li)) || (!path_finding(&li)))
+	if (!(init_anthill(str, &li, NULL)) || (!path_finding(&li)))
 	{
 		delete_anthill(str, &li);
 		ft_putendl("ERROR");
@@ -106,5 +106,6 @@ int			main(int ac, char **av)
 		ft_putendl("ERROR with READ");
 		return (0);
 	}
+	str = ft_joinnfree(str, "\n", 1);
 	return (main_after_read(str, option(ac, av)));
 }

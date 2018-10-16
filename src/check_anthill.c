@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 18:01:22 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/10/15 13:59:40 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/10/16 15:49:26 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,30 +50,30 @@ char		cmd_cmt(char **s, t_li *li)
 	return (1);
 }
 
-char		init_anthill(char *s, t_li *li)
+char		init_anthill(char *s, t_li *li, char *tmp)
 {
-	char	tmp[21];
-	char	*tmp2;
-
 	cmd_cmt(&s, li);
 	li->lem = ft_atoi(s);
-	if (ft_istrcmp("2147483648", ft_strncpy(tmp, s, ft_strclen(s, '\n'))) == -1
-		|| li->lem < 1)
+	if (ft_isint(tmp = ft_strndup(s, ft_strclen(s, '\n'))) != 1 || li->lem < 1)
+	{
+		ft_strdel(&tmp);
 		return (0);
+	}
+	ft_strdel(&tmp);
 	while (*s != '\n' && *s != 0)
 		s++;
-	tmp2 = s + 1;
+	tmp = s + 1;
 	if (check_room(&s, li) == 0 || li->end == NULL || li->beg == NULL)
 		return (0);
 	if (*s == '-')
 		while (s[-1] != '\n' && *s != 0)
 			s--;
-	if (!(save_room(tmp2, s--, li)))
+	if (*s == 0 || !(save_room(tmp, s--, li)))
 		return (0);
-	tmp2 = s + 1;
+	tmp = s + 1;
 	if (check_pipe(&s, li) == 0)
 		delete_line(&s);
-	if (!(save_pipe(tmp2, li, 0, tmp2)))
+	if (!(save_pipe(tmp, li, 0, tmp)))
 		return (0);
 	return (1);
 }

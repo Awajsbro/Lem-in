@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/22 12:22:56 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/10/14 19:05:31 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/10/16 15:49:59 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct	s_li
 	t_pt	**room;
 }				t_li;
 
-char			init_anthill(char *s, t_li *li);
+char			init_anthill(char *s, t_li *li, char *tmp);
 char			cmd_cmt(char **s, t_li *li);
 char			save_room(char *s, char *end, t_li *li);
 char			check_room(char **s, t_li *li);

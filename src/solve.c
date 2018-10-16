@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/04 12:41:05 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/10/14 19:03:54 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/10/16 13:17:06 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static char		is_faster(int sim, t_list **path, t_li *li)
 		x = -1;
 		while (li->way[++x] != NULL)
 		{
-			j = 0;
+			j = -1;
 			while (li->way[x][++j] != 1 && ((int*)(path[i]->content))[j] != 1)
 				if (((int*)(path[i]->content))[j] == li->way[x][j])
 					return (1);

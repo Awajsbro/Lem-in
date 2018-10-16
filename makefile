@@ -6,17 +6,14 @@
 #    By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/22 12:25:25 by awajsbro          #+#    #+#              #
-#    Updated: 2018/10/14 19:04:51 by awajsbro         ###   ########.fr        #
+#    Updated: 2018/10/16 15:58:43 by awajsbro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		= lem-in
+NAME			= lem-in
 
-MAIN		=	main.c \
-
-MAIN_DEBUG	=	main_debug.c \
-
-SRC			=	check_anthill.c \
+SRC_NAME		= main.c \
+				check_anthill.c \
 				room.c \
 				pipe.c \
 				path_finding.c \
@@ -25,50 +22,39 @@ SRC			=	check_anthill.c \
 				delete_anthill.c \
 				bonus.c \
 
-OBJ			=	$(SRC:.c=.o) $(MAIN:.c=.o)
+SRC_PATH 		= ./src/
 
-OBJ_DEBUG	=	$(SRC:.c=.o) $(MAIN_DEBUG:.c=.o)
+OBJ_PATH		= obj/
+HEADER			= ./lem_in.h
+CPP_FLAGS		= -Iinclude
+LDFLAGS			= -Llibft
+LDLIBS			= -lft
+CC				= gcc
+FLAGS			= -Wall -Wextra -Werror -g
 
-OBJDIR		=	obj/
+OBJ_NAME		= $(SRC_NAME:.c=.o)
+SRC				= $(addprefix $(SRC_PATH),$(SRC_NAME))
+OBJ				= $(addprefix $(OBJ_PATH),$(OBJ_NAME))
 
-SRCDIR		=	src/
+all: $(NAME)
 
-LIB_DIR 	=	./libft/
+$(NAME): $(OBJ)
+	@make all -C ./libft
+	@$(CC) $(LDFLAGS) $(LDLIBS) $^ -o $@
 
-LIBFT 		=	./libft/libft.a
+$(OBJ_PATH)%.o: $(SRC_PATH)%.c $(HEADER)
+	@mkdir $(OBJ_PATH) 2> /dev/null || true
+	@$(CC) $(FLAGS) $(CPP_FLAGS) -o $@ -c $<
 
-FLAG		=	-Wall -Werror -Wextra -g
+clean:
+	@make clean -C ./libft
+	@rm -fv $(OBJ)
+	@rmdir $(OBJ_PATH) 2> /dev/null || true
 
-all :
-	@$(MAKE) -C $(LIB_DIR)
-	@mkdir -p $(OBJDIR)
-	@gcc $(FLAG) -c $(addprefix $(SRCDIR), $(MAIN) $(SRC))
-	@mv $(OBJ) $(OBJDIR)
-	@gcc $(FLAG) $(addprefix $(OBJDIR), $(OBJ)) $(LIBFT) -o $(NAME)
-	@echo "\033[36m	LEM-IN\033[33m    ====\033[1m> \033[32;1mREADY TO USE\033[0m"
+fclean: clean
+	@make fclean -C ./libft
+	@rm -fv $(NAME)
 
-nolib :
-	@mkdir -p $(OBJDIR)
-	@gcc $(FLAG) -c $(addprefix $(SRCDIR), $(MAIN) $(SRC))
-	@mv $(OBJ) $(OBJDIR)
-	@gcc $(FLAG) $(addprefix $(OBJDIR), $(OBJ)) $(LIBFT) -o $(NAME)
-	@echo "\033[36m	LEM-IN\033[33m    ====\033[1m> \033[32;1mREADY TO USE\033[0m"
+re: fclean all
 
-debug :
-	@mkdir -p $(OBJDIR)
-	@gcc -ggdb $(FLAG) -c $(addprefix $(SRCDIR), $(MAIN_DEBUG) $(SRC))
-	@mv $(OBJ_DEBUG) $(OBJDIR)
-	@gcc -ggdb $(FLAG) $(addprefix $(OBJDIR), $(OBJ_DEBUG)) $(LIBFT) -o $(NAME)
-	@echo "\033[36m	LEM-IN\033[33m    ====\033[1m> \033[32;1mREADY TO USE\033[0m"
-
-clean :
-	@$(MAKE) clean -C $(LIB_DIR)
-	@rm -rf $(OBJDIR)
-	@echo "\033[31;1m	CLEANING DONE\033[0m"
-
-fclean : clean
-	@$(MAKE) fclean -C $(LIB_DIR)
-	@rm $(NAME)
-	@echo "\033[36m	LEM-IN\033[33m    ====\033[1m> \033[31;1mDELETED\033[0m"
-
-re : fclean all
+.PHONY : clean fclean re all

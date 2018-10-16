@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 15:27:35 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/10/14 18:54:52 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/10/16 14:34:18 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,12 @@ static char	is_room(char *s, t_li *li)
 {
 	int		i;
 	int		len;
-	int		r;
 
 	i = -1;
 	len = ft_strclen(s, '-');
 	while (++i < li->nroom)
-		if (ft_strnequ(s, ROOM[i]->name, len) == 1)
+		if (ft_strnequ(s, ROOM[i]->name, ft_strlen(ROOM[i]->name))
+			&& (ft_strnequ(s, ROOM[i]->name, len) == 1))
 			break ;
 	if (i == 0 || i == 1)
 		ROOM[i]->z = ROOM[i]->z + 1;
@@ -71,11 +71,12 @@ static char	is_room(char *s, t_li *li)
 	s = s + len + 1;
 	len = ft_strclen(s, '\n');
 	while (++i < li->nroom)
-		if ((r = ft_strnequ(s, ROOM[i]->name, len)) == 1)
+		if (ft_strnequ(s, ROOM[i]->name, ft_strlen(ROOM[i]->name))
+			&& (ft_strnequ(s, ROOM[i]->name, len) == 1))
 			break ;
 	if (i == 0 || i == 1)
 		ROOM[i]->z = (ROOM[i]->z) + 1;
-	return (r);
+	return (i == li->nroom ? 0 : 1);
 }
 
 static char	is_same_room_pipe(char *s, char *bp, t_li *li)
@@ -113,7 +114,8 @@ char		check_pipe(char **s, t_li *li)
 	char	*bp;
 
 	bp = *s + 1;
-	while ((++*s)[0] != 0)
+	minus = 0;
+	while (*(++*s) != 0)
 	{
 		if (cmd_cmt(s, li) == 0)
 			return (0);
@@ -121,7 +123,7 @@ char		check_pipe(char **s, t_li *li)
 		minus = 0;
 		while ((*s)[++j] != '\n' && (*s)[j] != 0)
 		{
-			if ((*s)[j] == '-')
+			if ((*s)[j] == '-' && j != 0)
 				minus++;
 			else if ((*s)[j] == ' ')
 				return (0);
