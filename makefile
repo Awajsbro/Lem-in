@@ -6,7 +6,7 @@
 #    By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/22 12:25:25 by awajsbro          #+#    #+#              #
-#    Updated: 2018/10/16 15:58:43 by awajsbro         ###   ########.fr        #
+#    Updated: 2018/10/19 10:54:27 by awajsbro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,19 +22,22 @@ SRC_NAME		= main.c \
 				delete_anthill.c \
 				bonus.c \
 
-SRC_PATH 		= ./src/
-
-OBJ_PATH		= obj/
 HEADER			= ./lem_in.h
+
+SRC_PATH 		= src/
+OBJ_PATH		= obj/
+
 CPP_FLAGS		= -Iinclude
 LDFLAGS			= -Llibft
 LDLIBS			= -lft
+
 CC				= gcc
-FLAGS			= -Wall -Wextra -Werror -g
+FLAGS			= -Wall -Wextra -Werror
 
 OBJ_NAME		= $(SRC_NAME:.c=.o)
-SRC				= $(addprefix $(SRC_PATH),$(SRC_NAME))
-OBJ				= $(addprefix $(OBJ_PATH),$(OBJ_NAME))
+
+SRC				= $(addprefix $(SRC_PATH),$(SRC_NAME) $(SRC_MAIN))
+OBJ				= $(addprefix $(OBJ_PATH),$(OBJ_NAME) $(OBJ_MAIN))
 
 all: $(NAME)
 

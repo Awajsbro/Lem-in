@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/04 12:41:05 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/10/16 13:17:06 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/10/17 16:22:21 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static t_list	**select_path(int *sim, t_li *li, int i)
 	*path = NULL;
 	tmp = *sim;
 	li->lsp = ft_lststart(li->lsp);
-	while (*path == NULL || !is_work(path, sim, &i, li))
+	while ((*path == NULL || !is_work(path, sim, &i, li)) && *sim != 0)
 	{
 		if (tmp != *sim)
 		{
@@ -106,7 +106,7 @@ static t_list	**select_path(int *sim, t_li *li, int i)
 		while (++i < *sim)
 		{
 			path[i] = li->lsp;
-			if (li->lsp->next == NULL)
+			if (li->lsp == NULL || li->lsp->next == NULL)
 				break ;
 			li->lsp = li->lsp->next;
 		}

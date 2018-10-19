@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/17 14:31:13 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/10/15 14:20:21 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/10/16 16:40:14 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static char	fuck_norme(t_li *li, t_list **uw)
 	lv++;
 	return (li->lsp == NULL ? 0 : 1);
 }
-//benoit est pd
+
 char		drown_room(t_li *li, char end)
 {
 	static t_list	*uw = NULL;

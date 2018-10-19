@@ -6,11 +6,13 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/22 12:18:47 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/10/16 13:34:51 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/10/17 16:17:28 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lem_in.h"
+
+#define FILE "/Users/awajsbro/project/lem_in/TEST_LEM_IN/SAVE/_maps/basic02"
 
 static void	init_li(t_li *li)
 {
@@ -23,7 +25,7 @@ static void	init_li(t_li *li)
 	li->way = NULL;
 	li->opt = 0;
 	li->lem = 0;
-	li->dlem =
+	li->dlem = 0;
 	li->nroom = 0;
 	li->npipe = 0;
 }
@@ -49,7 +51,6 @@ static void	init_move(t_li *li)
 	i = -1;
 	if (!(li->way = (int**)malloc(sizeof(*(li->way)) * li->lem)))
 	{
-		delete_anthill(li->str, li);
 		ft_putendl("ERROR with MALLOC");
 		return ;
 	}
@@ -68,7 +69,7 @@ static char	main_after_read(char *str, char opt)
 	init_li(&li);
 	li.opt = opt;
 	li.str = str;
-	if (!(init_anthill(str, &li)) || (!path_finding(&li)))
+	if (!(init_anthill(str, &li, NULL)) || (!path_finding(&li)))
 	{
 		delete_anthill(str, &li);
 		ft_putendl("ERROR");
@@ -92,7 +93,7 @@ int			main(int ac, char **av)
 	int		fd;
 
 	str = ft_strnew(0);
-	fd = open("/Users/awajsbro/project/lem_in/TEST_LEM_IN/SAVE/_maps/example", O_RDONLY);
+	fd = open(FILE, O_RDONLY);
 	while ((r = read(fd, buff, 127)) > 0)
 	{
 		buff[r] = 0;

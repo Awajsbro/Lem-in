@@ -6,7 +6,7 @@
 /*   By: awajsbro <awajsbro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/22 12:18:47 by awajsbro          #+#    #+#             */
-/*   Updated: 2018/10/16 15:49:45 by awajsbro         ###   ########.fr       */
+/*   Updated: 2018/10/17 16:17:21 by awajsbro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ static void	init_move(t_li *li)
 	i = -1;
 	if (!(li->way = (int**)malloc(sizeof(*(li->way)) * li->lem)))
 	{
-		delete_anthill(li->str, li);
 		ft_putendl("ERROR with MALLOC");
 		return ;
 	}
@@ -106,6 +105,7 @@ int			main(int ac, char **av)
 		ft_putendl("ERROR with READ");
 		return (0);
 	}
-	str = ft_joinnfree(str, "\n", 1);
-	return (main_after_read(str, option(ac, av)));
+	if (!(str = ft_joinnfree(str, "\n", 1)))
+		ft_putendl("ERROR with MALLOC");
+	return (str == NULL ? 0 : main_after_read(str, option(ac, av)));
 }
